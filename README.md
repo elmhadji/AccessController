@@ -4,12 +4,12 @@ This repository contain a python Application  tha are a System Access Controller
 # Running the Application
 To run the Application just navigate to the directory that contain the main.py  file and run the following command:
 
-` ` `bash 
+```bash 
 python main.py
-` ` `
+```
 
 Please ensure that you have the necessary dependencies installed in your Python environment, including PySide6 ,open-cv  ,face_recognition. You can install PySide6 using pip:
 
-` ` `bash
+```bash
 pip install PySide6 opencv-python face-recognition
-` ` `
+```
