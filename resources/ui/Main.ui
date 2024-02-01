@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>742</width>
+    <height>606</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow{
+	background-color: rgb(53, 53, 53);
+}
+QTabWidget::tab-bar {
+	border: 30px solid rgb(0, 0, 255);
+	color: rgb(189, 189, 189);
+}
+QTabBar &gt; #titleTab{
+	padding:20px;
+}
+
+QTabBar{
+	background-color: rgb(53, 53, 53);
+	
+}
+QTabBar::tab { 
+	border-top-left-radius:12;
+	border-top-right-radius:12;
+  	padding: 10px;
+	
+ }
+
+QTabBar::tab:selected {
+	background-color: rgb(0, 142, 246);
+	text-decoration: none;
+ }
+
+QTabWidget ::pane &gt; QWidget{
+	background-color: rgb(33, 33, 33);
+}
+QTabWidget::pane {
+ border-top:2px solid rgb(0, 142, 246) ;
+}
+
+#mainTab QPushButton{
+	background-color: rgb(43, 45, 53);
+	color: rgb(189, 189, 189);
+    border: 1px solid rgb(189, 189, 189);
+    border-radius: 12px; 
+    padding: 20px; 
+}
+
+#mainTab QPushButton::hover{
+	background-color: rgb(0, 142, 246);
+	color: rgb(189, 189, 189);
+    border: 1px solid rgb(189, 189, 189);
+    border-radius: 12px; 
+    padding: 20px; 
+}
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="tabletTracking">
+       <bool>false</bool>
+      </property>
+      <property name="tabShape">
+       <enum>QTabWidget::Rounded</enum>
+      </property>
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="elideMode">
+       <enum>Qt::ElideMiddle</enum>
+      </property>
+      <property name="documentMode">
+       <bool>false</bool>
+      </property>
+      <property name="tabsClosable">
+       <bool>false</bool>
+      </property>
+      <property name="tabBarAutoHide">
+       <bool>false</bool>
+      </property>
+      <widget class="QWidget" name="titleTab">
+       <attribute name="title">
+        <string>Access Controler</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="mainTab">
+       <attribute name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/Icons/Home.png</normaloff>:/icons/Icons/Home.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>Main</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="liveButton">
+            <property name="text">
+             <string>  Live</string>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/icons/Icons/circle-dot.png</normaloff>:/icons/Icons/circle-dot.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="playBackButton">
+            <property name="text">
+             <string>  PlayBack</string>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/icons/Icons/Play-back.png</normaloff>:/icons/Icons/Play-back.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignVCenter">
+           <widget class="QPushButton" name="eventsButton">
+            <property name="text">
+             <string>  Events</string>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/icons/Icons/Notification.png</normaloff>:/icons/Icons/Notification.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="dataBaseButton">
+            <property name="text">
+             <string>  Data Base</string>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/icons/Icons/Data-Base.png</normaloff>:/icons/Icons/Data-Base.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>742</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
