@@ -18,6 +18,14 @@ class MainPage (Ui_MainWindow ,QMainWindow):
 		self.liveButton.clicked.connect(self.setLiveTab)
 		self.dataBaseButton.clicked.connect(self.setDtataBaseTab)
 
+
+	def closeEvent(self, event):
+		if self.liveTab is not None:
+			self.liveTab.closeEvent(event)
+		if self.dataBaseTab is not None and self.dataBaseTab.addPersonWidgetWindow is not None:
+			self.dataBaseTab.addPersonWidgetWindow.close()
+		event.accept()
+
 	def setLiveTab(self):
 		if self.liveTab is None:
 			self.liveTab = CameraWidget()
@@ -35,7 +43,6 @@ class MainPage (Ui_MainWindow ,QMainWindow):
 			self.dataBaseTab = DataBaseWidget()
 			self.tabWidget.addTab(self.dataBaseTab ,'Data Base')
 			self.tabWidget.setCurrentIndex(self.tabWidget.count() - 1)
-		
 		
 
 if __name__=="__main__":

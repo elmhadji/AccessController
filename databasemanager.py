@@ -15,53 +15,57 @@ class DataBaseManager:
 	def createTable(self):
 		with self.connection:
 			self.connection.execute("""
-				CREATE TABLE IF NOT EXISTS person (
-					id INTEGER PRIMARY KEY AUTOINCREMENT,
-					name TEXT NOT NULL UNIQUE,
-					encoding TEXT NOT NULL
-				);
+				CREATE TABLE IF NOT EXISTS persons (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL UNIQUE,
+                    birthday TEXT NOT NULL,
+                    phone INTEGER NOT NULL,
+                    email TEXT NOT NULL,
+                    address TEXT NOT NULL,
+                    encoding TEXT NOT NULL
+                );
 			""")
 			self.connection.commit()
 
-	def addPerson(self, name, encoding):
+	def addPerson(self, name, birthday, phone, email, address, encoding):
 		with self.connection:
 			# Save the encoding as a string directly
-			encoding_str = ",".join(map(str, encoding))
+			encodingStr = ",".join(map(str, encoding))
 			self.connection.execute("""
-				INSERT INTO person (name, encoding) VALUES (?, ?);
-			""", (name, encoding_str))
+				INSERT INTO persons (name, birthday, phone, email, address, encoding) VALUES (?, ?, ?, ?, ?, ?);
+			""", (name, birthday, int(phone), email, address, encodingStr))
 			self.connection.commit()
 
 	def getEncodingList(self, name):
 		with self.connection:
 			cursor = self.connection.execute("""
-				SELECT encoding FROM person WHERE name = ?;
+				SELECT encoding FROM persons WHERE name = ?;
 			""", (name,))
 			row = cursor.fetchone()
 			if row:
-				encoding_str = row[0]
+				encodingStr = row[0]
 				# Convert the encoding string into a list of floats
-				encoding_list = list(map(float, encoding_str.split(",")))
-				return encoding_list
+				encodingList = list(map(float, encodingStr.split(",")))
+				return encodingList
 			else:
 				return None
 
 	def getEncodingArray(self):
 		with self.connection:
 			cursor = self.connection.execute("""
-				SELECT encoding FROM person;
+				SELECT encoding FROM persons;
 			""")
-			encoding_list = []
+			encodingList = []
 			for row in cursor:
-				encoding_str = row[0]
+				encodingStr = row[0]
 				# Remove square brackets and then split the encoding string using any whitespace as a separator
-				encoding_list.append(list(map(float, encoding_str.strip('[]').split())))
-			return encoding_list
+				encodingList.append(list(map(float, encodingStr.strip('[]').split())))
+			return encodingList
 
 	def getPersonNames(self):
 		with self.connection:
 			cursor = self.connection.execute("""
-				SELECT name FROM person;
+				SELECT name FROM persons;
 			""")
-			names_list = [row[0] for row in cursor]
-			return names_list
+			namesList = [row[0] for row in cursor]
+			return namesList

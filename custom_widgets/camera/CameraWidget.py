@@ -29,17 +29,11 @@ class CameraWidget(Ui_Camera ,QWidget):
 
     @Slot()
     def killThread(self):
-        print('Finishing...')
-        if self.add_person_widget_window is not None:
-            self.add_person_widget_window.close()
+
         self.th.status = False  # Set the status flag to stop the thread
         self.th.quit()
         self.th.wait()  # Wait for the thread to finish
         self.th = None
-
-    @Slot()
-    def receiveData(self):
-        self.add_person_widget_window = None
 
 
 class Thread(QThread):

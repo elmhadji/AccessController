@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AddPersonWidget</class>
+ <widget class="QWidget" name="AddPersonWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>600</width>
+    <height>500</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>600</width>
+    <height>500</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget#AddPersonWidget{
+	background-color: rgb(43, 45, 53);
+}
+QPushButton{
+	border:2px solid rgb(189, 189, 189); 
+	border-radius:12px;
+	color: rgb(255, 255, 255);
+	height:50px;
+	font-size:20px
+}
+QPushButton#add_button{
+	background-color: rgb(28, 113, 216);
+}
+QLineEdit{
+	background-color: rgb(43, 45, 53);
+	border:2px solid rgb(189, 189, 189); 
+	border-radius:12px;
+	color: rgb(255, 255, 255);
+	height:50px;
+	font-size:20px
+}
+QLabel#person_picture{
+	border:2px solid rgb(189, 189, 189); 
+	border-radius:12px;
+	padding:5px
+}
+
+QLabel { 
+	background-color: rgb(43, 45, 53); 
+	color: rgb(255, 255, 255); 
+	height: 50px; 
+	font-size: 20px; 
+}
+
+QDateEdit { 
+	background-color: rgb(43, 45, 53); 
+	border: 2px solid rgb(189, 189, 189); 
+	border-radius: 12px; 
+	color: rgb(255, 255, 255); 
+	height: 50px; 
+	font-size: 20px; 
+}
+
+QDateEdit::up-button, QDateEdit::down-button { 
+	subcontrol-origin: border; 
+	subcontrol-position: right center; 
+	width: 20px; 
+	border: none; 
+	background: transparent; 
+}
+
+QDateEdit::up-arrow, QDateEdit::down-arrow { 
+	width: 10px; 
+	height: 10px; 
+	image: url(arrow.png); 
+}
+
+QDateEdit::up-arrow { 
+	top: -5px; 
+	transform: rotate(90deg); 
+}
+
+QDateEdit::down-arrow { 
+	bottom: -5px; 
+	transform: rotate(-90deg); 
+}
+
+QDateEdit::calendar-popup { 
+	border: 2px solid rgb(189, 189, 189); 
+	border-radius: 12px; 
+}
+</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_3">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QLabel" name="personPictureLabel">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="../../resources/qrcs/addPerson.qrc">:/images/images/Person.jpg</pixmap>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,3">
+         <item>
+          <widget class="QLabel" name="nameLabel">
+           <property name="text">
+            <string>Name</string>
+           </property>
+           <property name="buddy">
+            <cstring>nameInput</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="nameInput">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="placeholderText">
+            <string>Name</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,3">
+         <item>
+          <widget class="QLabel" name="birthdayLabel">
+           <property name="text">
+            <string>Birthday</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+           <property name="buddy">
+            <cstring>birthdayInput</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDateEdit" name="birthdayInput">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="currentSection">
+            <enum>QDateTimeEdit::DaySection</enum>
+           </property>
+           <property name="displayFormat">
+            <string>d/M/yyyy</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,3">
+         <item>
+          <widget class="QLabel" name="phoneNumberLabel">
+           <property name="text">
+            <string>Phone</string>
+           </property>
+           <property name="buddy">
+            <cstring>phoneNumberInput</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="phoneNumberInput">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="placeholderText">
+            <string>Phone Number</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,3">
+         <item>
+          <widget class="QLabel" name="emailLabel">
+           <property name="text">
+            <string>Email</string>
+           </property>
+           <property name="buddy">
+            <cstring>emailInput</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="emailInput">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="placeholderText">
+            <string>Email</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,3">
+         <item>
+          <widget class="QLabel" name="adresseLabel">
+           <property name="text">
+            <string>Adresse</string>
+           </property>
+           <property name="buddy">
+            <cstring>adresseInput</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="adresseInput">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="placeholderText">
+            <string>Adresse</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPushButton" name="selectImageButton">
+         <property name="text">
+          <string>Select Image</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="addButton">
+         <property name="text">
+          <string>Add</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="cancelButton">
+         <property name="text">
+          <string>Cancel</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>nameInput</tabstop>
+  <tabstop>birthdayInput</tabstop>
+  <tabstop>phoneNumberInput</tabstop>
+  <tabstop>emailInput</tabstop>
+  <tabstop>adresseInput</tabstop>
+  <tabstop>selectImageButton</tabstop>
+  <tabstop>addButton</tabstop>
+  <tabstop>cancelButton</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../resources/qrcs/addPerson.qrc"/>
+ </resources>
+ <connections/>
+</ui>
