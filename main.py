@@ -41,9 +41,14 @@ class MainPage (Ui_MainWindow ,QMainWindow):
 	def setDtataBaseTab(self):
 		if self.dataBaseTab is None:
 			self.dataBaseTab = DataBaseWidget()
+			self.dataBaseTab.populateTableWithPersonsInfo()
 			self.tabWidget.addTab(self.dataBaseTab ,'Data Base')
 			self.tabWidget.setCurrentIndex(self.tabWidget.count() - 1)
-		
+
+	def onTabChange(self ,index):
+		current_tab_name = self.tabWidget.tabText(index)
+		if current_tab_name == "Data Base": 
+			self.dataBaseTab.populateTableWithPersonsInfo()	
 
 if __name__=="__main__":
 	import sys
