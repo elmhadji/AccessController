@@ -202,6 +202,12 @@ QDateEdit::calendar-popup {
          </item>
          <item>
           <widget class="QLineEdit" name="phoneNumberInput">
+           <property name="inputMask">
+            <string/>
+           </property>
+           <property name="maxLength">
+            <number>32767</number>
+           </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
            </property>
@@ -226,6 +232,9 @@ QDateEdit::calendar-popup {
          </item>
          <item>
           <widget class="QLineEdit" name="emailInput">
+           <property name="inputMask">
+            <string/>
+           </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
            </property>

@@ -169,6 +169,7 @@ class Ui_AddPersonWidget(object):
 
         self.phoneNumberInput = QLineEdit(AddPersonWidget)
         self.phoneNumberInput.setObjectName(u"phoneNumberInput")
+        self.phoneNumberInput.setMaxLength(32767)
         self.phoneNumberInput.setAlignment(Qt.AlignCenter)
 
         self.horizontalLayout_6.addWidget(self.phoneNumberInput)
@@ -272,8 +273,10 @@ class Ui_AddPersonWidget(object):
         self.birthdayLabel.setText(QCoreApplication.translate("AddPersonWidget", u"Birthday", None))
         self.birthdayInput.setDisplayFormat(QCoreApplication.translate("AddPersonWidget", u"d/M/yyyy", None))
         self.phoneNumberLabel.setText(QCoreApplication.translate("AddPersonWidget", u"Phone", None))
+        self.phoneNumberInput.setInputMask("")
         self.phoneNumberInput.setPlaceholderText(QCoreApplication.translate("AddPersonWidget", u"Phone Number", None))
         self.emailLabel.setText(QCoreApplication.translate("AddPersonWidget", u"Email", None))
+        self.emailInput.setInputMask("")
         self.emailInput.setPlaceholderText(QCoreApplication.translate("AddPersonWidget", u"Email", None))
         self.adresseLabel.setText(QCoreApplication.translate("AddPersonWidget", u"Adresse", None))
         self.adresseInput.setPlaceholderText(QCoreApplication.translate("AddPersonWidget", u"Adresse", None))
