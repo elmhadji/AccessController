@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AddPersonWidget</class>
- <widget class="QWidget" name="AddPersonWidget">
+ <class>PersonDetails</class>
+ <widget class="QWidget" name="PersonDetails">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -212,7 +212,7 @@ QDateEdit::calendar-popup {
             <set>Qt::AlignCenter</set>
            </property>
            <property name="placeholderText">
-            <string>Phone Number</string>
+            <string>+000000000000</string>
            </property>
           </widget>
          </item>

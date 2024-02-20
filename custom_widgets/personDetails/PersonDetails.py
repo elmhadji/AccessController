@@ -1,27 +1,28 @@
-from PySide6.QtWidgets import QWidget, QFileDialog ,QDialog
-from PySide6.QtGui import QRegularExpressionValidator, QPixmap
-from PySide6.QtCore import Signal ,QDate ,QRegularExpression
+from PySide6.QtWidgets import QWidget, QFileDialog
+from PySide6.QtGui import QPixmap
+from PySide6.QtCore import Signal ,QDate 
 import face_recognition
 from ..dialog.ErrorDialog import ErrorDialog
-from .AddPersonWidget_ui import Ui_AddPersonWidget
-from ..dataBase.DataBaseWidget import DataBaseWidget
+from .PersonDetails_ui import Ui_PersonDetails
+from ..dataBase.DataBase import DataBaseWidget
 from databasemanager import DataBaseManager
 import cv2 as cv
 import shutil
 import os
+import re
 
-class AddPersonWidget(Ui_AddPersonWidget, QWidget):
+class PersonDetailsWidget(Ui_PersonDetails, QWidget):
     sendInformation = Signal()
     dataBaseManager = DataBaseManager()
     imagePath ,personInfo ,errorDialog = None ,None ,None
     
     def __init__(self, Widget: DataBaseWidget):
-        super(AddPersonWidget, self).__init__()
+        super(PersonDetailsWidget, self).__init__()
         self.setupUi(self)
 
-        self.addButton.clicked.connect(self.addPerson)
+        self.addButton.clicked.connect(self.processPersonDetails)
         self.selectImageButton.clicked.connect(self.selectImage)
-        self.cancelButton.clicked.connect(self.closeAddPersonWidget)
+        self.cancelButton.clicked.connect(self.closePersonDetailsWidget)
         self.sendInformation.connect(Widget.receiveData)
         
     def selectImage(self):
@@ -43,7 +44,17 @@ class AddPersonWidget(Ui_AddPersonWidget, QWidget):
         destinationPath = os.path.join(personImageFolder, f"{personName}.jpg")
         shutil.copy2(imagePath, destinationPath)
 
-    def addPerson(self):
+    def validatePhoneNumber(self, phoneNumber):
+        # Regex pattern for international phone numbers
+        pattern = r'^\+\d{1,3}\d{1,14}$'
+        return re.match(pattern, phoneNumber) is not None
+
+    def validateEmail(self, email):
+        # Regex pattern for email addresses
+        pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        return re.match(pattern, email) is not None
+    
+    def processPersonDetails(self):
         if self.nameInput.text() == "":
             self.showErrorDialog("Error Validation" ,"Please fill the nameInput.")
             return
@@ -60,6 +71,13 @@ class AddPersonWidget(Ui_AddPersonWidget, QWidget):
             self.showErrorDialog("Error Validation" ,"Please select an image.")
             return
         
+        if not self.validatePhoneNumber(self.phoneNumberInput.text()):
+            self.showErrorDialog("Error Validation", "Please enter a valid phone number.")
+            return
+        
+        if not self.validateEmail(self.emailInput.text()):
+            self.showErrorDialog("Error Validation", "Please enter a valid email address.")
+            return
         #TODO: Add Validation for email and number
         
         if self.personInfo is None:
@@ -140,7 +158,7 @@ class AddPersonWidget(Ui_AddPersonWidget, QWidget):
         self.adresseInput.setText(personInfo['address'])
         self.loadPersonImage(personInfo['name'])
     
-    def closeAddPersonWidget(self):
+    def closePersonDetailsWidget(self):
         self.sendInformation.emit()
         self.close()
 
