@@ -57,19 +57,15 @@ class Records(Ui_Records ,QWidget):
 
 	def setVideoPlayer(self):
 		self.titleLabel.setText('Videos')
-		self.player.setSource(QUrl())
-		self.player.play()
+		self.clearVideoViewer()
+		self.clearPictureViewer()
 		self.stackedWidget.setCurrentIndex(0)
 		self.fillListWidgetWithVideos()
 
 	def setPictureViewer(self):
 		self.titleLabel.setText('Pictures')
-		self.currentTimeVideo.setText("00:00:00")
-		self.totalTimeVideo.setText("00:00:00")
-		size = self.pictureViewer.size()
-		self.pictureViewer.setPixmap(
-				QPixmap('resources/images/blackImage.jpg').scaled(size ,Qt.AspectRatioMode.KeepAspectRatio)
-			)
+		self.clearVideoViewer()
+		self.clearPictureViewer()
 		self.stackedWidget.setCurrentIndex(1)
 		self.fillListWidgetWithPictures()
 
@@ -84,7 +80,7 @@ class Records(Ui_Records ,QWidget):
 		videoFiles = [f for f in os.listdir(videoFolderPath) if f.endswith(('.mp4', '.avi', '.mkv'))]
 		for videoFile in videoFiles:
 			videoCardInfo = VideoCardInfo()
-			videoCardInfo.refreshVideoList.connect(self.fillListWidgetWithVideos)
+			videoCardInfo.refreshVideoList.connect(self.refreshVideoViewer)
 			videoCardInfo.setupCard({
 					"videoFolderPath":videoFolderPath,
 					"videoFile":videoFile,
@@ -94,7 +90,7 @@ class Records(Ui_Records ,QWidget):
 			self.listWidget.addItem(listWidgetItem)
 			self.listWidget.setItemWidget(listWidgetItem, videoCardInfo)
 
-	@Slot()
+
 	def fillListWidgetWithPictures(self):
 		self.listWidget.clear()
 		dataBaseManager = DataBaseManager()
@@ -105,7 +101,7 @@ class Records(Ui_Records ,QWidget):
 		pictureFiles = [f for f in os.listdir(picturesFolderPath) if f.endswith(('.jpg', '.jpeg'))]
 		for pictureFile in pictureFiles:
 			pictureCardInfo = PictureCardInfo()
-			pictureCardInfo.refreshPicturesList.connect(self.fillListWidgetWithPictures)
+			pictureCardInfo.refreshPicturesList.connect(self.refreshPictureViewer)
 			pictureCardInfo.setupCard({
 					"pictureFolderPath":picturesFolderPath,
 					"pictureFile":pictureFile,
@@ -115,6 +111,31 @@ class Records(Ui_Records ,QWidget):
 			self.listWidget.addItem(listWidgetItem)
 			self.listWidget.setItemWidget(listWidgetItem, pictureCardInfo)
 
+	def refreshVideoViewer (self):
+		self.clearVideoViewer()
+		self.fillListWidgetWithVideos()
+
+	def refreshPictureViewer (self):
+		self.clearPictureViewer()
+		self.fillListWidgetWithPictures()
+
+	def clearVideoViewer (self):
+		#TODO: Think how store the current item nam in the viewer
+		#TODO: Compare between selected item to delete and current item in the viewer
+		if self.player.isPlaying():
+			self.player.pause()
+		self.player.setSource(QUrl())
+		self.player.play()
+		self.currentTimeVideo.setText("00:00:00")
+		self.totalTimeVideo.setText("00:00:00")
+	
+	def clearPictureViewer (self):
+		#TODO: Think how store the current item nam in the viewer
+		#TODO: Compare between selected item to delete and current item in the viewer
+		size = self.pictureViewer.size()
+		self.pictureViewer.setPixmap(
+				QPixmap('resources/images/blackImage.jpg').scaled(size ,Qt.AspectRatioMode.KeepAspectRatio)
+			)
 
 	def toggleSideBar(self):
 		if self.videoRadioButton.isChecked():
