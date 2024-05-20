@@ -10,11 +10,10 @@ class FrameReadingThread(QThread):
 	updateFrame = Signal(QImage)
 	resetCustomLabel = Signal()
 
-	def __init__(self, captureId, captureName, parent=None):
+	def __init__(self, captureId:int, captureName:str, parent=None):
 		QThread.__init__(self, parent)
-		self.capture = cv2.VideoCapture(captureId)
-		#FIXME  check it later to see what it does 
-		# self.capture.set(cv2.CAP_PROP_BUFFERSIZE, 1024)
+		self.captureId = captureId
+		self.capture = cv2.VideoCapture(self.captureId)
 		self.captureName = str(captureName)
 		self.videoWriter = None
 		self.status = True
@@ -30,7 +29,7 @@ class FrameReadingThread(QThread):
 			ret, frame = self.capture.read()
 			if not ret:
 				continue
-			if self.lastRecognition.secsTo(QTime.currentTime()) >=1:
+			if self.lastRecognition.secsTo(QTime.currentTime()) >=1 and self.recognitionThread.frame is None:
 				self.sendFrame.emit(frame)
 				self.lastRecognition = QTime.currentTime()
 			if self.startTime.secsTo(QTime.currentTime()) >= 3600000: # 3600000 milliseconds = 1 hour
@@ -61,21 +60,23 @@ class FrameReadingThread(QThread):
 		self.videoWriter = cv2.VideoWriter(filename, cv2.VideoWriter.fourcc(*'mp4v') ,24 ,size, isColor=True)
 		self.startTime = QTime.currentTime()
 
-	@Slot()
 	def endRecognitionThread(self):
 		if self.recognitionThread is not None and self.recognitionThread.isRunning():
+			self.sendFrame.disconnect(self.recognitionThread.setFrame)
 			self.recognitionThread.killThread()
-		print('recognition ended')
+			self.recognitionThread.frame = None
+			print('recognition ended')
 
-	@Slot()
 	def startRecognitionThread(self):
 		if self.recognitionThread is not None and not self.recognitionThread.isRunning():
+			self.sendFrame.connect(self.recognitionThread.setFrame)
 			self.recognitionThread.start()
-		print('recognition started')
+			print('recognition started')
 
 
 	def killThread(self):
 		self.status = False
+		self.sendFrame.disconnect(self.recognitionThread.setFrame)
 		self.capture.release()
 		if self.videoWriter is not None:
 			self.videoWriter.release()
