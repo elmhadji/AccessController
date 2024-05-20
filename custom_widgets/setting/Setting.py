@@ -18,7 +18,9 @@ def validateEmail(email: str) -> bool:
 
 class Setting(Ui_Setting, QWidget):
 	connectThread = Signal()
+	updateCaptureList = Signal()
 	updateRecordsFolderPath = Signal()
+
 
 	def __init__(self):
 		super(Setting, self).__init__()
@@ -33,7 +35,7 @@ class Setting(Ui_Setting, QWidget):
 		self.loadCameras()
 		self.loadSavedEmail()
 		self.saveEmailButton.clicked.connect(self.saveEmail)
-		self.refreshButton.clicked.connect(self.loadCameras)
+		self.refreshButton.clicked.connect(self.updateCaptureList.emit)
 		self.recognitionButton.clicked.connect(lambda : self.stackedWidget.setCurrentIndex(0))
 		self.recordsButton.clicked.connect(lambda : self.stackedWidget.setCurrentIndex(1))
 		self.notificationButton.clicked.connect(lambda : self.stackedWidget.setCurrentIndex(2))
@@ -41,6 +43,7 @@ class Setting(Ui_Setting, QWidget):
 		self.updateButtonStyles()
 
 	def loadCameras(self):
+		print("you are in the setting load function")
 		self.cameraTableWidget.clear()
 		self.cameraTableWidget.setHorizontalHeaderLabels(["Camera ID","Camera Name","Recognition status"])
 		captures = QMediaDevices.videoInputs()
@@ -128,6 +131,11 @@ class Setting(Ui_Setting, QWidget):
 		for framReadingThread in self.framReaderThreads.values():
 			recognitionThread = framReadingThread.recognitionThread
 			recognitionThread.initializeKnownEmbeddings()
+			if len(recognitionThread.knownEmbeddings) == 0:
+				checkbox = self.getCheckboxForCaptureId(framReadingThread.captureId)
+				if checkbox:
+					checkbox.setChecked(False)
+				
 
 	def toggleRecognition(self, captureId, state):
 		if captureId in self.framReaderThreads:
@@ -159,6 +167,7 @@ class Setting(Ui_Setting, QWidget):
 
 	def killAllThreads(self):
 		for framReadingThread in self.framReaderThreads.values():
+			framReadingThread.recognitionThread.killThread()
 			framReadingThread.killThread()
 
 	@Slot()
@@ -178,13 +187,18 @@ class Setting(Ui_Setting, QWidget):
 		captureId = int(captureId)
 		if captureId not in self.framReaderThreads:
 			frameReadingThread = FrameReadingThread(int(captureId), captureName)
-			frameReadingThread.recognitionThread.signalEmail.connect(self.sendingEmail)
+			recognitionThread = frameReadingThread.recognitionThread
+			recognitionThread.signalEmail.connect(self.sendingEmail)
 			self.framReaderThreads[captureId] = frameReadingThread
 			self.connectThread.emit()
 			checkbox = self.getCheckboxForCaptureId(captureId)
 			if checkbox is not None:
+				isKnownEmbeddings = len(recognitionThread.knownEmbeddings) == 0
+				if isKnownEmbeddings:
+					recognitionThread.killThread()
 				checkbox.setEnabled(True)
-				checkbox.setChecked(True)
+				print(f"isKnownEmbeddings: {isKnownEmbeddings}")
+				checkbox.setChecked(not isKnownEmbeddings)
 				frameReadingThread.start()
 
 	def deleteFrameReadingThread(self, captureId:int):

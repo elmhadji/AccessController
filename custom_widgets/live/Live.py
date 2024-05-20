@@ -14,6 +14,7 @@ class Live(Ui_Live ,QWidget):
 		super(Live, self).__init__()
 		self.setupUi(self)
 		self.setting = setting
+		self.setting.updateCaptureList.connect(self.refreshCaptureList)
 		self.setCameraList()
 		self.setUI()
 		self.refreshCapturesButton.clicked.connect(self.refreshCaptureList)
@@ -98,6 +99,9 @@ class Live(Ui_Live ,QWidget):
 				break
 	
 	def refreshCaptureList(self):
+		print("you are in the live refresh function")
+		#FIXME: Call another function that work like refreshCaptureList from setting instead of loadCameras
+		self.setting.loadCameras()
 		cameras = QMediaDevices.videoInputs()
 		busyCameras = self.setting.framReaderThreads.keys()
 		availableCameras:dict[int ,str] = {}
