@@ -183,13 +183,13 @@ class DataBaseManager:
 			else:
 				return None
 
-	def getEncodingArray(self) -> dict:
+	def getEncodingArray(self) -> dict[int ,list]:
 		with self.connection:
 			cursor = self.connection.execute("""
 				SELECT personID, embedding FROM faceEmbedding;
 				"""
 											 )
-		embeddingsByPersonId = {}
+		embeddingsByPersonId:dict[int ,list] = {}
 		# Iterate through the rows and populate the dictionary
 		for row in cursor:
 			personId, embedding = row
